@@ -735,6 +735,8 @@
         step3SuccessAlert.classList.remove('hidden');
         indemnitySigned = true;
 
+        
+
         // Update Step 3 header to show completion
         step3Header.innerHTML = `
           <p class="text-sm font-semibold text-gray-600">Step 3 of 4: Indemnity & Consent</p>
@@ -746,8 +748,52 @@
         step3Section.classList.remove('border-gray-200');
         step3Section.classList.add('border-[hsl(355,35%,40%)]');
       }
-    }
+    }    let paymentStatus = 'Unpaid';
+        const step4Section = document.getElementById('step4Section');
+    const step4Header = document.getElementById('step4Header');
+    const step4SuccessAlert = document.getElementById('step4SuccessAlert');
+    const step4SuccessMessage = document.getElementById('step4SuccessMessage');
+    const proceedToPaymentBtn = document.getElementById('proceedToPaymentBtn');
 
+        /**
+     * Update Step 4 state (enable/disable based on conditions)
+     */
+    function updateStep4State() {
+      const ageGatePassed = dateOfBirthInput.value && danLevelSelect.value &&
+                            calculateAge(dateOfBirthInput.value) >= ageRequirements[danLevelSelect.value];
+
+      if (ageGatePassed && criteriaValid && indemnitySigned) {
+        // Enable Step 4
+        step4Section.classList.remove('opacity-50', 'pointer-events-none');
+        step4Header.innerHTML = `
+          <p class="text-sm font-semibold text-gray-600">Step 4 of 4: Payment & Submission</p>
+          <h2 class="text-2xl font-bold mb-2" style="color: hsl(355,35%,40%);">Payment & Submission</h2>
+          <p class="text-gray-600">Review fees and confirm payment to submit this grading application.</p>
+        `;
+      } else {
+        // Disable Step 4
+        step4Section.classList.add('opacity-50', 'pointer-events-none');
+        step4Header.innerHTML = `
+          <p class="text-sm font-semibold text-gray-600">Step 4 of 4: Payment & Submission</p>
+          <h2 class="text-2xl font-bold mb-2" style="color: hsl(355,35%,40%);">Payment & Submission</h2>
+          <p class="text-gray-600">Complete Steps 1–3 to unlock payment and submission.</p>
+        `;
+        step4SuccessAlert.classList.add('hidden');
+        paymentStatus = 'Unpaid';
+      }
+    }    /**
+     * Simulate payment for Step 4
+     */
+    function simulatePayment() {
+      if (!step4Section || step4Section.classList.contains('pointer-events-none')) {
+        return; // Step 4 not unlocked yet
+      }
+
+      paymentStatus = 'Paid';
+      step4SuccessAlert.classList.remove('hidden');
+      step4SuccessMessage.textContent = 'Payment marked as successful for this grading application.';
+    }
+    proceedToPaymentBtn.addEventListener('click', simulatePayment);
     /**
      * Set today's date as default in consent date input
      */
