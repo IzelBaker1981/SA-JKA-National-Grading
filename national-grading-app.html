@@ -3,21 +3,169 @@
 <head>
   <meta charset="UTF-8">
   <title>SA JKA National Dan Grading</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
+<body class="bg-gray-50">
   <!-- Student Information Card -->
-  <section>
-    <h1>National Dan Grading Application</h1>
-    <p>Sensei, please complete the student information to begin the grading application.</p>
+  <div class="min-h-screen py-8 px-4">
+    <div class="max-w-2xl mx-auto">
+      <!-- Step Indicator -->
+      <div class="mb-6">
+        <p class="text-sm font-semibold text-gray-600">Step 1 of 4: Student Information</p>
+      </div>
 
-    <!-- Top-of-screen form fields -->
-    <form>
-      <!-- Date of Grading (dropdown) -->
-      <!-- Name, Surname, Date of Birth (date picker) -->
-      <!-- Attempted Dan Level (dropdown) -->
-      <!-- Dojo (dropdown) -->
-      <!-- Cell Number, Email Address -->
-    </form>
-  </section>
+      <!-- Main Card -->
+      <section class="bg-white border border-gray-200 rounded-lg shadow-sm p-8 mb-6">
+        <h1 class="text-3xl font-bold mb-2" style="color: hsl(355,35%,40%);">National Dan Grading Application</h1>
+        <p class="text-gray-600 mb-6">Sensei, please complete the student information to begin the grading application.</p>
+
+        <!-- Error Message (hidden by default) -->
+        <div id="ageErrorAlert" class="hidden mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+          <p class="text-red-700 font-semibold">Age Requirement Not Met</p>
+          <p id="ageErrorMessage" class="text-red-600 text-sm mt-1"></p>
+        </div>
+
+        <!-- Student Information Form -->
+        <form id="studentForm" class="space-y-6">
+          <!-- Date of Grading -->
+          <div>
+            <label for="gradingDate" class="block text-sm font-semibold text-gray-900 mb-2">Date of Grading</label>
+            <select id="gradingDate" class="w-full px-4 py-2 border border-gray-300 rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500" required>
+              <option value="">Select grading date</option>
+              <option value="2026-09">2026-09 National Grading</option>
+              <option value="2027-03">2027-03 National Grading</option>
+              <option value="2027-09">2027-09 National Grading</option>
+            </select>
+          </div>
+
+          <!-- Name -->
+          <div>
+            <label for="name" class="block text-sm font-semibold text-gray-900 mb-2">Name</label>
+            <input id="name" type="text" class="w-full px-4 py-2 border border-gray-300 rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500" placeholder="Enter student name" required>
+          </div>
+
+          <!-- Surname -->
+          <div>
+            <label for="surname" class="block text-sm font-semibold text-gray-900 mb-2">Surname</label>
+            <input id="surname" type="text" class="w-full px-4 py-2 border border-gray-300 rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500" placeholder="Enter student surname" required>
+          </div>
+
+          <!-- Date of Birth -->
+          <div>
+            <label for="dateOfBirth" class="block text-sm font-semibold text-gray-900 mb-2">Date of Birth</label>
+            <input id="dateOfBirth" type="date" class="w-full px-4 py-2 border border-gray-300 rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500" required>
+          </div>
+
+          <!-- Attempted Dan Level -->
+          <div>
+            <label for="danLevel" class="block text-sm font-semibold text-gray-900 mb-2">Attempted Dan Level</label>
+            <select id="danLevel" class="w-full px-4 py-2 border border-gray-300 rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500" required>
+              <option value="">Select dan level</option>
+              <option value="1">1st Dan</option>
+              <option value="2">2nd Dan</option>
+              <option value="3">3rd Dan</option>
+              <option value="4">4th Dan</option>
+              <option value="5">5th Dan</option>
+            </select>
+          </div>
+
+          <!-- Dojo -->
+          <div>
+            <label for="dojo" class="block text-sm font-semibold text-gray-900 mb-2">Dojo</label>
+            <select id="dojo" class="w-full px-4 py-2 border border-gray-300 rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500" required>
+              <option value="">Select dojo</option>
+              <option value="cape-town">Cape Town Dojo</option>
+              <option value="johannesburg">Johannesburg Dojo</option>
+              <option value="durban">Durban Dojo</option>
+              <option value="pretoria">Pretoria Dojo</option>
+              <option value="stellenbosch">Stellenbosch Dojo</option>
+            </select>
+          </div>
+
+          <!-- Cell Number -->
+          <div>
+            <label for="cellNumber" class="block text-sm font-semibold text-gray-900 mb-2">Cell Number</label>
+            <input id="cellNumber" type="tel" class="w-full px-4 py-2 border border-gray-300 rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500" placeholder="Enter cell number" required>
+          </div>
+
+          <!-- Email Address -->
+          <div>
+            <label for="email" class="block text-sm font-semibold text-gray-900 mb-2">Email Address</label>
+            <input id="email" type="email" class="w-full px-4 py-2 border border-gray-300 rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500" placeholder="Enter email address" required>
+          </div>
+        </form>
+      </section>
+
+      <!-- Next Section Placeholder (disabled by default) -->
+      <section id="nextSection" class="bg-white border border-gray-200 rounded-lg shadow-sm p-8 opacity-50 pointer-events-none transition-opacity duration-300">
+        <h2 class="text-2xl font-bold mb-2" style="color: hsl(355,35%,40%);">Step 2: Grading Criteria</h2>
+        <p class="text-gray-600">Complete Step 1 to unlock this section.</p>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    // Age requirements per dan level
+    const ageRequirements = {
+      1: 12,
+      2: 14,
+      3: 16,
+      4: 18,
+      5: 18
+    };
+
+    const dateOfBirthInput = document.getElementById('dateOfBirth');
+    const danLevelSelect = document.getElementById('danLevel');
+    const ageErrorAlert = document.getElementById('ageErrorAlert');
+    const ageErrorMessage = document.getElementById('ageErrorMessage');
+    const nextSection = document.getElementById('nextSection');
+
+    /**
+     * Calculate age from date of birth
+     */
+    function calculateAge(birthDate) {
+      const today = new Date();
+      const birth = new Date(birthDate);
+      let age = today.getFullYear() - birth.getFullYear();
+      const monthDiff = today.getMonth() - birth.getMonth();
+      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
+        age--;
+      }
+      return age;
+    }
+
+    /**
+     * Validate age against dan level requirement
+     */
+    function validateAgeGate() {
+      const birthDate = dateOfBirthInput.value;
+      const selectedDanLevel = danLevelSelect.value;
+
+      // If either field is empty, clear error and disable next section
+      if (!birthDate || !selectedDanLevel) {
+        ageErrorAlert.classList.add('hidden');
+        nextSection.classList.add('opacity-50', 'pointer-events-none');
+        return;
+      }
+
+      const age = calculateAge(birthDate);
+      const requiredAge = ageRequirements[selectedDanLevel];
+
+      if (age < requiredAge) {
+        // Age requirement not met
+        ageErrorMessage.textContent = `To attempt ${selectedDanLevel === '1' ? '1st' : selectedDanLevel === '2' ? '2nd' : selectedDanLevel === '3' ? '3rd' : selectedDanLevel === '4' ? '4th' : '5th'} Dan, the student must be at least ${requiredAge} years old. Current age: ${age} years.`;
+        ageErrorAlert.classList.remove('hidden');
+        nextSection.classList.add('opacity-50', 'pointer-events-none');
+      } else {
+        // Age requirement met
+        ageErrorAlert.classList.add('hidden');
+        nextSection.classList.remove('opacity-50', 'pointer-events-none');
+      }
+    }
+
+    // Add event listeners
+    dateOfBirthInput.addEventListener('change', validateAgeGate);
+    danLevelSelect.addEventListener('change', validateAgeGate);
+  </script>
 </body>
 </html>
