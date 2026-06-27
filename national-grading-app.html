@@ -154,21 +154,21 @@
               <!-- Pre-Gradings -->
               <div>
                 <label for="preGradings" class="block text-sm font-semibold text-gray-900 mb-2">Number of Pre-Gradings Completed</label>
-                <input id="preGradings" type="number" min="0" class="w-full px-4 py-2 border border-gray-300 rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500" placeholder="Enter number" value="0">
+                <input id="preGradings" type="number" min="0" class="w-full px-4 py-2 border border-gray-300 rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500" placeholder="Enter number">
                 <p id="preGradingsHelperText" class="text-gray-600 text-sm mt-2"></p>
               </div>
 
               <!-- Table Official Duties -->
               <div id="tableOfficialContainer" class="hidden">
                 <label for="tableOfficialDuties" class="block text-sm font-semibold text-gray-900 mb-2">Table Official Duties Completed</label>
-                <input id="tableOfficialDuties" type="number" min="0" class="w-full px-4 py-2 border border-gray-300 rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500" placeholder="Enter number" value="0">
+                <input id="tableOfficialDuties" type="number" min="0" class="w-full px-4 py-2 border border-gray-300 rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500" placeholder="Enter number">
                 <p id="tableOfficialHelperText" class="text-gray-600 text-sm mt-2"></p>
               </div>
 
               <!-- Judging Duties -->
               <div id="judgingDutiesContainer" class="hidden">
                 <label for="judgingDuties" class="block text-sm font-semibold text-gray-900 mb-2">Judging Duties Completed</label>
-                <input id="judgingDuties" type="number" min="0" class="w-full px-4 py-2 border border-gray-300 rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500" placeholder="Enter number" value="0">
+                <input id="judgingDuties" type="number" min="0" class="w-full px-4 py-2 border border-gray-300 rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500" placeholder="Enter number">
                 <p id="judgingDutiesHelperText" class="text-gray-600 text-sm mt-2"></p>
               </div>
             </div>
@@ -237,8 +237,8 @@
           <h3 class="text-lg font-semibold mb-4" style="color: hsl(355,35%,40%);">Indemnity Text</h3>
           <p class="text-gray-700 leading-relaxed">
             <strong>Indemnity and Release of Liability:</strong><br><br>
-            I hereby acknowledge that I am participating in the SA JKA National Dan Grading event at my own risk. I understand that martial arts training and grading involves physical exertion, potential for injury, and other inherent risks.<br><br>
-            I assume all risks associated with my participation and hereby release, discharge, and hold harmless SA JKA, its officials, employees, volunteers, agents, and any other parties involved in organizing or conducting the grading from any and all claims, demands, causes of action, damages, or liabilities arising out of or related to my participation, including but not limited to personal injury, property damage, or any other loss.<br><br>
+            I hereby acknowledge that I am participating in the SA JKA National Dan Grading event at my own risk. I understand that martial arts training and grading involves physical exertion, potential risk of injury, and assumes inherent risks of the sport.<br><br>
+            I assume all risks associated with my participation and hereby release, discharge, and hold harmless SA JKA, its officials, employees, volunteers, agents, and any other parties involved in the organization of this grading event from any and all claims, damages, or liabilities arising from my participation, including but not limited to injuries incurred during training or grading.<br><br>
             I confirm that I am in good health and physically capable of participating in this grading. I assume full responsibility for my own medical care and insurance.<br><br>
             I further consent to the collection and processing of my personal data in accordance with applicable data protection laws, and for the purposes of administering this grading event.<br><br>
             <em>For full details, please refer to the SA JKA Indemnity Form in the repository.</em>
@@ -250,7 +250,7 @@
           <!-- Electronic Signature -->
           <div>
             <label for="electronicSignature" class="block text-sm font-semibold text-gray-900 mb-2">Electronic Signature (Student or Guardian)</label>
-            <input id="electronicSignature" type="text" class="w-full px-4 py-2 border border-gray-300 rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500" placeholder="Enter full name as signature" required>
+            <input id="electronicSignature" type="text" class="w-full px-4 py-2 border border-gray-300 rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500" placeholder="Enter full name">
             <p class="text-gray-600 text-sm mt-2">Type your full name to sign electronically.</p>
           </div>
 
@@ -271,7 +271,7 @@
 
           <!-- Confirm Button -->
           <div>
-            <button id="confirmIndemnityBtn" type="button" class="w-full bg-orange-500 text-white font-semibold py-3 rounded-md hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500">Confirm Indemnity and Consent</button>
+            <button id="confirmIndemnityBtn" type="button" class="w-full bg-orange-500 text-white font-semibold py-3 rounded-md hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500">Confirm Indemnity</button>
           </div>
         </form>
       </section>
@@ -509,6 +509,8 @@
      * Validate age gate
      */
     function validateAgeGate() {
+      console.log("Age gate validated");
+      
       const birthDate = dateOfBirthInput.value;
       const selectedDanLevel = danLevelSelect.value;
 
@@ -710,11 +712,19 @@
 
     // Add event listeners
     dateOfBirthInput.addEventListener('change', validateAgeGate);
+    dateOfBirthInput.addEventListener('input', validateAgeGate);
+    
     danLevelSelect.addEventListener('change', () => {
       validateAgeGate();
       updateStep2Form();
       updateCalculatedTrainingYears();
     });
+    danLevelSelect.addEventListener('input', () => {
+      validateAgeGate();
+      updateStep2Form();
+      updateCalculatedTrainingYears();
+    });
+    
     gradingDateSelect.addEventListener('change', () => {
       updateCalculatedTrainingYears();
       updateStep3Summary();
