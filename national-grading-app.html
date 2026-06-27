@@ -97,7 +97,7 @@
       </section>
 
       <!-- Step 2: Grading Criteria Card -->
-      <section id="step2Section" class="bg-white border border-gray-200 rounded-lg shadow-sm p-8 opacity-50 pointer-events-none transition-opacity duration-300 transition-all mb-6">
+      <section id="step2Section" class="bg-white border border-gray-200 rounded-lg shadow-sm p-8 transition-opacity duration-300 transition-all mb-6">
         <div id="step2Header" class="mb-6">
           <p class="text-sm font-semibold text-gray-600">Step 2 of 4: Grading Criteria</p>
           <h2 class="text-2xl font-bold mb-2" style="color: hsl(355,35%,40%);">Grading Criteria Validation</h2>
@@ -130,14 +130,14 @@
               </div>
 
               <!-- Years of Paid Affiliations (for 1st Dan) -->
-              <div id="affiliationsContainer" class="hidden">
+              <div id="affiliationsContainer">
                 <label for="paidAffiliations" class="block text-sm font-semibold text-gray-900 mb-2">Years of Paid Affiliations (Blue Book)</label>
                 <input id="paidAffiliations" type="number" step="0.5" min="0" class="w-full px-4 py-2 border border-gray-300 rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-or[...]">
                 <p id="affiliationsHelperText" class="text-gray-600 text-sm mt-2"></p>
               </div>
 
               <!-- Years of Consecutive Training (for 2nd-5th Dan) -->
-              <div id="trainingContainer" class="hidden">
+              <div id="trainingContainer">
                 <label for="consecutiveTraining" class="block text-sm font-semibold text-gray-900 mb-2">Years of Consecutive Training Since Last Grading</label>
                 <div class="p-4 bg-gray-100 rounded-md mb-2">
                   <p id="calculatedTrainingYears" class="text-gray-900 font-semibold">Calculated: — years</p>
@@ -159,14 +159,14 @@
               </div>
 
               <!-- Table Official Duties -->
-              <div id="tableOfficialContainer" class="hidden">
+              <div id="tableOfficialContainer">
                 <label for="tableOfficialDuties" class="block text-sm font-semibold text-gray-900 mb-2">Table Official Duties Completed</label>
                 <input id="tableOfficialDuties" type="number" min="0" class="w-full px-4 py-2 border border-gray-300 rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500" pla[...]>
                 <p id="tableOfficialHelperText" class="text-gray-600 text-sm mt-2"></p>
               </div>
 
               <!-- Judging Duties -->
-              <div id="judgingDutiesContainer" class="hidden">
+              <div id="judgingDutiesContainer">
                 <label for="judgingDuties" class="block text-sm font-semibold text-gray-900 mb-2">Judging Duties Completed</label>
                 <input id="judgingDuties" type="number" min="0" class="w-full px-4 py-2 border border-gray-300 rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500" pla[...]>
                 <p id="judgingDutiesHelperText" class="text-gray-600 text-sm mt-2"></p>
