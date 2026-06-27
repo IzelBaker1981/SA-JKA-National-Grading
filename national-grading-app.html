@@ -32,9 +32,9 @@
             <label for="gradingDate" class="block text-sm font-semibold text-gray-900 mb-2">Date of Grading</label>
             <select id="gradingDate" class="w-full px-4 py-2 border border-gray-300 rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500" required>
               <option value="">Select grading date</option>
-              <option value="2026-09">2026-09 National Grading</option>
-              <option value="2027-03">2027-03 National Grading</option>
-              <option value="2027-09">2027-09 National Grading</option>
+              <option value="2026-09-15">2026-09 National Grading</option>
+              <option value="2027-03-15">2027-03 National Grading</option>
+              <option value="2027-09-15">2027-09 National Grading</option>
             </select>
           </div>
 
@@ -96,10 +96,89 @@
         </form>
       </section>
 
-      <!-- Next Section Placeholder (disabled by default) -->
-      <section id="nextSection" class="bg-white border border-gray-200 rounded-lg shadow-sm p-8 opacity-50 pointer-events-none transition-opacity duration-300">
-        <h2 class="text-2xl font-bold mb-2" style="color: hsl(355,35%,40%);">Step 2: Grading Criteria</h2>
-        <p class="text-gray-600">Complete Step 1 to unlock this section.</p>
+      <!-- Step 2: Grading Criteria Card -->
+      <section id="step2Section" class="bg-white border border-gray-200 rounded-lg shadow-sm p-8 opacity-50 pointer-events-none transition-opacity duration-300 transition-all mb-6">
+        <div id="step2Header" class="mb-6">
+          <p class="text-sm font-semibold text-gray-600">Step 2 of 4: Grading Criteria</p>
+          <h2 class="text-2xl font-bold mb-2" style="color: hsl(355,35%,40%);">Grading Criteria Validation</h2>
+          <p class="text-gray-600">Age requirements met. Now verifying training, affiliation, and duty requirements.</p>
+        </div>
+
+        <!-- Error Alert (hidden by default) -->
+        <div id="step2ErrorAlert" class="hidden mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+          <p class="text-red-700 font-semibold">Grading Criteria Not Met</p>
+          <p id="step2ErrorMessage" class="text-red-600 text-sm mt-1"></p>
+        </div>
+
+        <!-- Success Alert (hidden by default) -->
+        <div id="step2SuccessAlert" class="hidden mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
+          <p class="text-green-700 font-semibold">✓ All Grading Criteria Satisfied</p>
+          <p class="text-green-600 text-sm mt-1">Step 2 complete. You may proceed to indemnity.</p>
+        </div>
+
+        <!-- Form -->
+        <form id="step2Form" class="space-y-8">
+          <!-- Section A: Time & Affiliation Requirements -->
+          <div>
+            <h3 class="text-lg font-semibold mb-4" style="color: hsl(355,35%,40%);">A. Time & Affiliation Requirements</h3>
+            <div class="space-y-6">
+              <!-- Last Grading Date -->
+              <div>
+                <label for="lastGradingDate" class="block text-sm font-semibold text-gray-900 mb-2">Last Grading Date</label>
+                <input id="lastGradingDate" type="date" class="w-full px-4 py-2 border border-gray-300 rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                <p id="lastGradingHelperText" class="text-gray-600 text-sm mt-2"></p>
+              </div>
+
+              <!-- Years of Paid Affiliations (for 1st Dan) -->
+              <div id="affiliationsContainer" class="hidden">
+                <label for="paidAffiliations" class="block text-sm font-semibold text-gray-900 mb-2">Years of Paid Affiliations (Blue Book)</label>
+                <input id="paidAffiliations" type="number" step="0.5" min="0" class="w-full px-4 py-2 border border-gray-300 rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500" placeholder="Enter years">
+                <p id="affiliationsHelperText" class="text-gray-600 text-sm mt-2"></p>
+              </div>
+
+              <!-- Years of Consecutive Training (for 2nd-5th Dan) -->
+              <div id="trainingContainer" class="hidden">
+                <label for="consecutiveTraining" class="block text-sm font-semibold text-gray-900 mb-2">Years of Consecutive Training Since Last Grading</label>
+                <div class="p-4 bg-gray-100 rounded-md mb-2">
+                  <p id="calculatedTrainingYears" class="text-gray-900 font-semibold">Calculated: — years</p>
+                </div>
+                <p id="trainingHelperText" class="text-gray-600 text-sm mt-2"></p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section B: Pre-Gradings and Duties -->
+          <div>
+            <h3 class="text-lg font-semibold mb-4" style="color: hsl(355,35%,40%);">B. Pre-Gradings and Duties</h3>
+            <div class="space-y-6">
+              <!-- Pre-Gradings -->
+              <div>
+                <label for="preGradings" class="block text-sm font-semibold text-gray-900 mb-2">Number of Pre-Gradings Completed</label>
+                <input id="preGradings" type="number" min="0" class="w-full px-4 py-2 border border-gray-300 rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500" placeholder="Enter number" value="0">
+                <p id="preGradingsHelperText" class="text-gray-600 text-sm mt-2"></p>
+              </div>
+
+              <!-- Table Official Duties -->
+              <div id="tableOfficialContainer" class="hidden">
+                <label for="tableOfficialDuties" class="block text-sm font-semibold text-gray-900 mb-2">Table Official Duties Completed</label>
+                <input id="tableOfficialDuties" type="number" min="0" class="w-full px-4 py-2 border border-gray-300 rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500" placeholder="Enter number" value="0">
+                <p id="tableOfficialHelperText" class="text-gray-600 text-sm mt-2"></p>
+              </div>
+
+              <!-- Judging Duties -->
+              <div id="judgingDutiesContainer" class="hidden">
+                <label for="judgingDuties" class="block text-sm font-semibold text-gray-900 mb-2">Judging Duties Completed</label>
+                <input id="judgingDuties" type="number" min="0" class="w-full px-4 py-2 border border-gray-300 rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500" placeholder="Enter number" value="0">
+                <p id="judgingDutiesHelperText" class="text-gray-600 text-sm mt-2"></p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Validate Button -->
+          <div>
+            <button id="validateStep2Btn" type="button" class="w-full bg-orange-500 text-white font-semibold py-3 rounded-md hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500">Validate Grading Criteria</button>
+          </div>
+        </form>
       </section>
     </div>
   </div>
@@ -114,11 +193,52 @@
       5: 18
     };
 
+    // Grading criteria requirements per dan level
+    const gradingRequirements = {
+      1: { affiliations: 4, preGradings: 2, tableOfficialDuties: 1, judgingDuties: 0 },
+      2: { trainingYears: 2, preGradings: 2, tableOfficialDuties: 2, judgingDuties: 0 },
+      3: { trainingYears: 3, preGradings: 3, tableOfficialDuties: 0, judgingDuties: 1 },
+      4: { trainingYears: 4, preGradings: 3, tableOfficialDuties: 0, judgingDuties: 1 },
+      5: { trainingYears: 5, preGradings: 3, tableOfficialDuties: 0, judgingDuties: 1 }
+    };
+
+    // Get all relevant elements
     const dateOfBirthInput = document.getElementById('dateOfBirth');
     const danLevelSelect = document.getElementById('danLevel');
+    const gradingDateSelect = document.getElementById('gradingDate');
     const ageErrorAlert = document.getElementById('ageErrorAlert');
     const ageErrorMessage = document.getElementById('ageErrorMessage');
-    const nextSection = document.getElementById('nextSection');
+    const step2Section = document.getElementById('step2Section');
+    const step2Form = document.getElementById('step2Form');
+    const step2Header = document.getElementById('step2Header');
+    const step2ErrorAlert = document.getElementById('step2ErrorAlert');
+    const step2ErrorMessage = document.getElementById('step2ErrorMessage');
+    const step2SuccessAlert = document.getElementById('step2SuccessAlert');
+    const validateStep2Btn = document.getElementById('validateStep2Btn');
+
+    // Step 2 form elements
+    const lastGradingDateInput = document.getElementById('lastGradingDate');
+    const paidAffiliationsInput = document.getElementById('paidAffiliations');
+    const calculatedTrainingYearsSpan = document.getElementById('calculatedTrainingYears');
+    const preGradingsInput = document.getElementById('preGradings');
+    const tableOfficialDutiesInput = document.getElementById('tableOfficialDuties');
+    const judgingDutiesInput = document.getElementById('judgingDuties');
+
+    // Containers for conditional display
+    const affiliationsContainer = document.getElementById('affiliationsContainer');
+    const trainingContainer = document.getElementById('trainingContainer');
+    const tableOfficialContainer = document.getElementById('tableOfficialContainer');
+    const judgingDutiesContainer = document.getElementById('judgingDutiesContainer');
+
+    // Helper text elements
+    const lastGradingHelperText = document.getElementById('lastGradingHelperText');
+    const affiliationsHelperText = document.getElementById('affiliationsHelperText');
+    const trainingHelperText = document.getElementById('trainingHelperText');
+    const preGradingsHelperText = document.getElementById('preGradingsHelperText');
+    const tableOfficialHelperText = document.getElementById('tableOfficialHelperText');
+    const judgingDutiesHelperText = document.getElementById('judgingDutiesHelperText');
+
+    let criteriaValid = false;
 
     /**
      * Calculate age from date of birth
@@ -135,16 +255,112 @@
     }
 
     /**
-     * Validate age against dan level requirement
+     * Calculate years between two dates
+     */
+    function calculateYearsBetween(startDate, endDate) {
+      const start = new Date(startDate);
+      const end = new Date(endDate);
+      let years = end.getFullYear() - start.getFullYear();
+      const monthDiff = end.getMonth() - start.getMonth();
+      if (monthDiff < 0 || (monthDiff === 0 && end.getDate() < start.getDate())) {
+        years--;
+      }
+      return Math.max(0, years);
+    }
+
+    /**
+     * Get dan level name
+     */
+    function getDanLevelName(danLevel) {
+      const names = { 1: '1st', 2: '2nd', 3: '3rd', 4: '4th', 5: '5th' };
+      return names[danLevel];
+    }
+
+    /**
+     * Update Step 2 form based on selected dan level
+     */
+    function updateStep2Form() {
+      const selectedDanLevel = danLevelSelect.value;
+
+      if (!selectedDanLevel) {
+        affiliationsContainer.classList.add('hidden');
+        trainingContainer.classList.add('hidden');
+        tableOfficialContainer.classList.add('hidden');
+        judgingDutiesContainer.classList.add('hidden');
+        return;
+      }
+
+      const danLevelInt = parseInt(selectedDanLevel);
+      const requirements = gradingRequirements[danLevelInt];
+
+      // Update last grading date helper
+      lastGradingHelperText.textContent = danLevelInt === 1
+        ? 'Enter the date of your last grading (for 1st Dan, enter date if you have one).'
+        : `Enter the date of your last grading. Must have ${requirements.trainingYears} years consecutive training since then.`;
+
+      // Show/hide affiliations (1st Dan only)
+      if (danLevelInt === 1) {
+        affiliationsContainer.classList.remove('hidden');
+        affiliationsHelperText.textContent = `Required: ${requirements.affiliations} years of paid affiliations in the blue book.`;
+      } else {
+        affiliationsContainer.classList.add('hidden');
+      }
+
+      // Show/hide consecutive training (2nd-5th Dan)
+      if (danLevelInt > 1) {
+        trainingContainer.classList.remove('hidden');
+        trainingHelperText.textContent = `Required: ${requirements.trainingYears} years consecutive training since last grading.`;
+      } else {
+        trainingContainer.classList.add('hidden');
+      }
+
+      // Update pre-gradings helper
+      preGradingsHelperText.textContent = `Required: ${requirements.preGradings} pre-gradings.`;
+
+      // Show/hide table official duties
+      if (requirements.tableOfficialDuties > 0) {
+        tableOfficialContainer.classList.remove('hidden');
+        tableOfficialHelperText.textContent = `Required: ${requirements.tableOfficialDuties} table official ${requirements.tableOfficialDuties === 1 ? 'duty' : 'duties'}.`;
+      } else {
+        tableOfficialContainer.classList.add('hidden');
+      }
+
+      // Show/hide judging duties
+      if (requirements.judgingDuties > 0) {
+        judgingDutiesContainer.classList.remove('hidden');
+        judgingDutiesHelperText.textContent = `Required: ${requirements.judgingDuties} judging ${requirements.judgingDuties === 1 ? 'duty' : 'duties'}.`;
+      } else {
+        judgingDutiesContainer.classList.add('hidden');
+      }
+    }
+
+    /**
+     * Update calculated training years when last grading date changes
+     */
+    function updateCalculatedTrainingYears() {
+      const lastGradingDate = lastGradingDateInput.value;
+      const gradingDate = gradingDateSelect.value;
+
+      if (lastGradingDate && gradingDate) {
+        const years = calculateYearsBetween(lastGradingDate, gradingDate);
+        calculatedTrainingYearsSpan.textContent = `Calculated: ${years} ${years === 1 ? 'year' : 'years'}`;
+      } else {
+        calculatedTrainingYearsSpan.textContent = 'Calculated: — years';
+      }
+    }
+
+    /**
+     * Validate age gate
      */
     function validateAgeGate() {
       const birthDate = dateOfBirthInput.value;
       const selectedDanLevel = danLevelSelect.value;
 
-      // If either field is empty, clear error and disable next section
+      // If either field is empty, clear error and disable step 2
       if (!birthDate || !selectedDanLevel) {
         ageErrorAlert.classList.add('hidden');
-        nextSection.classList.add('opacity-50', 'pointer-events-none');
+        step2Section.classList.add('opacity-50', 'pointer-events-none');
+        criteriaValid = false;
         return;
       }
 
@@ -153,19 +369,110 @@
 
       if (age < requiredAge) {
         // Age requirement not met
-        ageErrorMessage.textContent = `To attempt ${selectedDanLevel === '1' ? '1st' : selectedDanLevel === '2' ? '2nd' : selectedDanLevel === '3' ? '3rd' : selectedDanLevel === '4' ? '4th' : '5th'} Dan, the student must be at least ${requiredAge} years old. Current age: ${age} years.`;
+        ageErrorMessage.textContent = `To attempt ${getDanLevelName(selectedDanLevel)} Dan, the student must be at least ${requiredAge} years old. Current age: ${age} years.`;
         ageErrorAlert.classList.remove('hidden');
-        nextSection.classList.add('opacity-50', 'pointer-events-none');
+        step2Section.classList.add('opacity-50', 'pointer-events-none');
+        criteriaValid = false;
       } else {
         // Age requirement met
         ageErrorAlert.classList.add('hidden');
-        nextSection.classList.remove('opacity-50', 'pointer-events-none');
+        step2Section.classList.remove('opacity-50', 'pointer-events-none');
+        updateStep2Form();
+        updateCalculatedTrainingYears();
+      }
+    }
+
+    /**
+     * Validate Step 2 grading criteria
+     */
+    function validateStep2Criteria() {
+      const selectedDanLevel = danLevelSelect.value;
+      const requirements = gradingRequirements[parseInt(selectedDanLevel)];
+      const errors = [];
+
+      if (!selectedDanLevel) {
+        step2ErrorAlert.classList.add('hidden');
+        step2SuccessAlert.classList.add('hidden');
+        return;
+      }
+
+      // Validate training/affiliation years
+      if (selectedDanLevel === '1') {
+        // 1st Dan: check affiliations
+        const affiliations = parseFloat(paidAffiliationsInput.value) || 0;
+        if (affiliations < requirements.affiliations) {
+          errors.push(`For 1st Dan, you need ${requirements.affiliations} years of paid affiliations. You have ${affiliations} years.`);
+        }
+      } else {
+        // 2nd-5th Dan: check consecutive training
+        const lastGradingDate = lastGradingDateInput.value;
+        const gradingDate = gradingDateSelect.value;
+        if (!lastGradingDate) {
+          errors.push('Please enter your last grading date.');
+        } else if (gradingDate) {
+          const trainingYears = calculateYearsBetween(lastGradingDate, gradingDate);
+          if (trainingYears < requirements.trainingYears) {
+            errors.push(`For ${getDanLevelName(selectedDanLevel)} Dan, you need ${requirements.trainingYears} years consecutive training since last grading. You have ${trainingYears} years.`);
+          }
+        }
+      }
+
+      // Validate pre-gradings
+      const preGradings = parseInt(preGradingsInput.value) || 0;
+      if (preGradings < requirements.preGradings) {
+        errors.push(`You need ${requirements.preGradings} pre-gradings. You have ${preGradings}.`);
+      }
+
+      // Validate table official duties
+      if (requirements.tableOfficialDuties > 0) {
+        const tableOfficialDuties = parseInt(tableOfficialDutiesInput.value) || 0;
+        if (tableOfficialDuties < requirements.tableOfficialDuties) {
+          errors.push(`You need ${requirements.tableOfficialDuties} table official ${requirements.tableOfficialDuties === 1 ? 'duty' : 'duties'}. You have ${tableOfficialDuties}.`);
+        }
+      }
+
+      // Validate judging duties
+      if (requirements.judgingDuties > 0) {
+        const judgingDuties = parseInt(judgingDutiesInput.value) || 0;
+        if (judgingDuties < requirements.judgingDuties) {
+          errors.push(`You need ${requirements.judgingDuties} judging ${requirements.judgingDuties === 1 ? 'duty' : 'duties'}. You have ${judgingDuties}.`);
+        }
+      }
+
+      // Display results
+      if (errors.length > 0) {
+        step2ErrorMessage.textContent = errors.join(' ');
+        step2ErrorAlert.classList.remove('hidden');
+        step2SuccessAlert.classList.add('hidden');
+        criteriaValid = false;
+      } else {
+        step2ErrorAlert.classList.add('hidden');
+        step2SuccessAlert.classList.remove('hidden');
+        criteriaValid = true;
+
+        // Update Step 2 header to show completion
+        step2Header.innerHTML = `
+          <p class="text-sm font-semibold text-gray-600">Step 2 of 4: Grading Criteria</p>
+          <h2 class="text-2xl font-bold mb-2" style="color: hsl(355,35%,40%);">✓ Grading Criteria Complete</h2>
+          <p class="text-gray-600">All criteria satisfied. You may proceed to indemnity.</p>
+        `;
+
+        // Change card border to maroon
+        step2Section.classList.remove('border-gray-200');
+        step2Section.classList.add('border-[hsl(355,35%,40%)]');
       }
     }
 
     // Add event listeners
     dateOfBirthInput.addEventListener('change', validateAgeGate);
-    danLevelSelect.addEventListener('change', validateAgeGate);
+    danLevelSelect.addEventListener('change', () => {
+      validateAgeGate();
+      updateStep2Form();
+      updateCalculatedTrainingYears();
+    });
+    gradingDateSelect.addEventListener('change', updateCalculatedTrainingYears);
+    lastGradingDateInput.addEventListener('change', updateCalculatedTrainingYears);
+    validateStep2Btn.addEventListener('click', validateStep2Criteria);
   </script>
 </body>
 </html>
